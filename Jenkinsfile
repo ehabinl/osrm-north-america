@@ -13,5 +13,21 @@ cp /home/ehab/Desktop/osrm/north-america-latest.osm.pbf north-america-latest.osm
         sh 'ls -lah *'
       }
     }
+    stage('Osrm Extract') {
+      steps {
+        sh 'docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/north-america-latest.osm.pbf'
+      }
+    }
+    stage('OSRM Partition') {
+      steps {
+        sh 'docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/north-america-latest.osrm'
+      }
+    }
+    stage('OSRM Customize') {
+      steps {
+        sh 'docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/north-america-latest.osrm'
+        sh 'ls -laht .'
+      }
+    }
   }
 }
