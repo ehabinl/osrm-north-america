@@ -29,5 +29,10 @@ cp /home/ehab/Desktop/osrm/north-america-latest.osm.pbf north-america-latest.osm
         sh 'ls -laht .'
       }
     }
+    stage('Chmod') {
+      steps {
+        sh 'chmod +r *'
+      }
+    }
   }
 }
